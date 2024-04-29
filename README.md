@@ -4,10 +4,12 @@ Mise à disposition des factures
 # Shéma de la BDD utilisée
 ![schema.png](schema.png)
 
-# Installation
+# Installation (linux)
 ```bash
  python3 -m venv venv
  source venv/bin/activate
+ # Windows : 
+ # . venv/Scripts/activate
  pip install -r requirements.txt
 ```
 
@@ -24,6 +26,14 @@ ll invoice.sqlite
 # Run local
 ```bash
  source venv/bin/activate
- UVICORN_PORT=3000 SECRET=EGo uvicorn main:app --host 0.0.0.0 --reload
+ UVICORN_PORT=8000 SECRET=EGo uvicorn main:app --host 0.0.0.0 --reload
 ```
-Accès au swagger:
+Accès au swagger: http://localhost:8000/docs
+
+# Création image docker
+
+```bash
+ docker build -t projetinvoice .
+ docker rm -f projetinvoice
+ docker run -d --name projetinvoice -p 8000:8000 projetinvoice
+```
