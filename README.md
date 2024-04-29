@@ -35,5 +35,5 @@ Accès au swagger: http://localhost:8000/docs
 ```bash
  docker build -t projetinvoice .
  docker rm -f projetinvoice
- docker run -d --name projetinvoice -p 8000:8000 projetinvoice
+ docker run -d --name projetinvoice -p 8000:80 projetinvoice
 ```
