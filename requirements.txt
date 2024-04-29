@@ -9,4 +9,7 @@ python-multipart
 uvicorn
 requests
 
+# Pour fillDB
+faker
+
 qrcode
