@@ -26,8 +26,8 @@ print('URL', DATABASE_URL, 'SECRET', SECRET, DISCORD)
 engine = create_engine(DATABASE_URL, echo=True, isolation_level="AUTOCOMMIT", connect_args={'check_same_thread': False})
 conn = engine.connect()
 
-template_str = open("templates/invoice.html", 'rb').read().decode("utf-8")
-template = Template(template_str)
+#template_str = open("templates/invoice.html", 'rb').read().decode("utf-8")
+#template = Template(template_str)
 
 if DISCORD:
     requests.post(DISCORD, json={"content":"Démarrage serveur Invoice !"})
@@ -71,7 +71,7 @@ BLUE = (0, 0, 255, 255)
 BLACK = (0, 0, 0, 255)
 logo = Image.open("logo128x128.png")
 
-def generatePDF(no, chk, fn):
+def generatePNG(no, chk, fn):
     data = generateBill(no)
     print(f"generatePDF, {no}, {chk}, {fn}; data.chk={data['chk']} -> {chk!=data['chk']}")
     if chk!=data['chk']: return None
@@ -156,7 +156,7 @@ def get_invoice(request: Request, noid: str="", secret: str=''):
 
     fn = f"static/{noid}.png"
     if True or not os.path.exists(fn):
-        res = generatePDF(vals[0], vals[-1], fn)
+        res = generatePNG(vals[0], vals[-1], fn)
         if not res:
             raise HTTPException(status_code=403, detail=f"Invalid n° {noid}")
             #return f"Invalid n° {noid}"

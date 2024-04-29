@@ -1,0 +1,12 @@
+pillow
+
+fastapi
+SQLAlchemy==2.0.27
+fastapi-sqlalchemy
+Jinja2
+python-dotenv
+python-multipart
+uvicorn
+requests
+
+qrcode
