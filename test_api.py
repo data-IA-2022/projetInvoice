@@ -19,7 +19,7 @@ def test_get_list():
     assert len(resp['invoices'])==0
 
 def test_get_invoice():
-    response = client.get("/invoices/FAC_2019_0018-8393420")
+    response = client.get("/invoices/FAC_2019_0018-839342")
     assert response.status_code == 200
     print(response.headers.get('content-type'))
     assert response.headers.get('content-type')=='image/png'
