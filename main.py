@@ -191,7 +191,7 @@ def get_down(request: Request, noid: str=""):
 
 
 def finish():
-    print("*** EXIT")
+    print("*** EXIT ***")
     if DISCORD:
         requests.post(DISCORD, json={"content":"Arrêt serveur Invoice !"})
 

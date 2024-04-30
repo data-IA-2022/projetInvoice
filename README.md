@@ -47,6 +47,28 @@ Accès au swagger: http://localhost:8000/docs
  docker run -d --name projetinvoice -p 8000:80 projetinvoice
 ```
 
+Création de Task
+```bash
+ RESOURCE_GROUP=goudot
+ LOCATION=francecentral
+ ACR_NAME=gretap3acr
+ IMAGE=projetinvoice
+ GIT_USER=data-IA-2022
+ GIT_PROJECT=projetInvoice
+ GIT_BRANCH=main
+ GIT_PAT=**********************
+
+ az acr task create \
+    --registry $ACR_NAME \
+    --name $IMAGE \
+    --image $IMAGE:latest \
+    --context https://github.com/$GIT_USER/$GIT_PROJECT.git#$GIT_BRANCH \
+    --file Dockerfile \
+    --git-access-token $GIT_PAT
+```
+
+
+
 Transfert image docker local -> datalab
 ```bash
  docker save projetinvoice | ssh -C goudot@datalab-mame.myconnectech.fr docker load
