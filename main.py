@@ -137,7 +137,7 @@ def get_invoices(request: Request, start_date: str=''):
     if 'accept' in request.headers and 'json' in request.headers['accept']:
         return {"invoices": [{"no":f"{x[0]}-{x[2]}", "dt":x[1], "votesUP":x[3], "votesDOWN":x[4]} for x in invoices]}
     else:
-        html="<html><header><title>Factures</title></header><body><h2>Invoices</h2><ul>"
+        html="<html><header><title>Factures</title></header><body><h2>Factures</h2><ul>"
         for x in invoices:
             html+=f"""<li><a target='img' href='/invoices/{x[0]}-{x[2]}'>{x[0]}</a> {x[1]} {str(x[3])+'👍🏻' if x[3] else ''} {str(x[4])+'👎🏻' if x[4] else ''}</li>"""
         html+="</ul></body></html>"

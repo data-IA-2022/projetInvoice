@@ -67,6 +67,35 @@ Création de Task
     --git-access-token $GIT_PAT
 ```
 
+## Déployer ECR
+```bash
+ ECR_NAME=invoiceocr
+ RESOURCE_GROUP=goudot
+ LOCATION=francecentral
+ ACR_NAME=gretap3acr
+ IMAGE=invoiceocr
+ ACR_PASSWORD=$(az acr credential show -n $ACR_NAME | jq -r '.passwords[0].value')
+ echo ACR_PASSWORD=$ACR_PASSWORD
+ DISCORD_WEBHOOK=https://discord.com/api/webhooks/********************************
+ 
+ az container create \
+    --resource-group $RESOURCE_GROUP \
+    --name $ECR_NAME \
+    --image $ACR_NAME.azurecr.io/$IMAGE \
+    --registry-username $ACR_NAME \
+    --registry-password $ACR_PASSWORD \
+    --dns-name-label $ECR_NAME \
+    --secure-environment-variables X=100 DISCORD_WEBHOOK=$DISCORD_WEBHOOK \
+    --ports 80
+```
+Documentation : https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest
+
+Suppression instance !!!
+```bash
+ az container delete--resource-group $RESOURCE_GROUP \
+    --name $ECR_NAME
+```
+
 
 
 Transfert image docker local -> datalab
