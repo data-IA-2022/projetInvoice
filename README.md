@@ -67,6 +67,12 @@ Création de Task
     --git-access-token $GIT_PAT
 ```
 
+```bash
+ az acr task list -r $ACR_NAME -o table
+ az acr task list-runs -r $ACR_NAME -o table
+```
+
+
 ## Déployer ECR
 ```bash
  ECR_NAME=invoiceocr
@@ -76,12 +82,12 @@ Création de Task
  IMAGE=invoiceocr
  ACR_PASSWORD=$(az acr credential show -n $ACR_NAME | jq -r '.passwords[0].value')
  echo ACR_PASSWORD=$ACR_PASSWORD
- DISCORD_WEBHOOK=https://discord.com/api/webhooks/********************************
- 
+ DISCORD_WEBHOOK=https://discord.com/api/webhooks/**************************
+  
  az container create \
     --resource-group $RESOURCE_GROUP \
     --name $ECR_NAME \
-    --image $ACR_NAME.azurecr.io/$IMAGE \
+    --image $ACR_NAME.azurecr.io/$IMAGE:latest \
     --registry-username $ACR_NAME \
     --registry-password $ACR_PASSWORD \
     --dns-name-label $ECR_NAME \
@@ -90,9 +96,19 @@ Création de Task
 ```
 Documentation : https://learn.microsoft.com/en-us/cli/azure/container?view=azure-cli-latest
 
+Redémarrage instance
+```bash
+ az container restart \
+  --resource-group $RESOURCE_GROUP \
+  --name $ECR_NAME
+```
+
+
 Suppression instance !!!
 ```bash
- az container delete--resource-group $RESOURCE_GROUP \
+ ECR_NAME=invoiceocr
+ RESOURCE_GROUP=goudot
+ az container delete --resource-group $RESOURCE_GROUP \
     --name $ECR_NAME
 ```
 
