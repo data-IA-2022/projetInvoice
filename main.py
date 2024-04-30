@@ -158,6 +158,9 @@ def get_invoice(request: Request, noid: str="", secret: str=''):
     if True or not os.path.exists(fn):
         res = generatePNG(vals[0], vals[-1], fn)
         if not res:
+            if DISCORD:
+                client_host = request.client.host
+                requests.post(DISCORD, json={"content":f"Essai de récupération de facture invalid {noid}, client_host={client_host}"})
             raise HTTPException(status_code=403, detail=f"Invalid n° {noid}")
             #return f"Invalid n° {noid}"
     return RedirectResponse("/"+fn)
@@ -188,6 +191,7 @@ def get_down(request: Request, noid: str=""):
 
 
 def finish():
+    print("*** EXIT")
     if DISCORD:
         requests.post(DISCORD, json={"content":"Arrêt serveur Invoice !"})
 

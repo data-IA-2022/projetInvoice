@@ -8,6 +8,7 @@ python-dotenv
 python-multipart
 uvicorn
 requests
+httpx
 
 # Pour fillDB
 faker
