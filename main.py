@@ -134,14 +134,11 @@ def get_invoices(request: Request, start_date: str=''):
     '''
     where = f"dt>'{start_date}'" if start_date else "true"
     invoices = conn.execute(text(f"""SELECT no,dt,chk,voteup,votedown FROM invoices WHERE {where} AND dt< datetime() ORDER BY dt LIMIT 1000;"""), {})
+    data={"invoices": [{"no": x[0], "chk": x[2], "dt":x[1], "votesUP":x[3], "votesDOWN":x[4]} for x in invoices]}
     if 'accept' in request.headers and 'json' in request.headers['accept']:
-        return {"invoices": [{"no":f"{x[0]}-{x[2]}", "dt":x[1], "votesUP":x[3], "votesDOWN":x[4]} for x in invoices]}
+        return data
     else:
-        html="<html><header><title>Factures</title></header><body><h2>Factures</h2><ul>"
-        for x in invoices:
-            html+=f"""<li><a target='img' href='/invoices/{x[0]}-{x[2]}'>{x[0]}</a> {x[1]} {str(x[3])+'👍🏻' if x[3] else ''} {str(x[4])+'👎🏻' if x[4] else ''}</li>"""
-        html+="</ul></body></html>"
-        return HTMLResponse(content=html, status_code=200) # {"status": "OK"}
+        return templates.TemplateResponse(request=request, name="index.html", context=data)
 
 @app.get("/invoices/{noid}")
 def get_invoice(request: Request, noid: str="", secret: str=''):
