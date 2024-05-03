@@ -1,9 +1,9 @@
 <html>
 <header>
-    <title>Factures</title>
+    <title>Factures (template)</title>
 </header>
 <body>
-<h2>Factures2</h2>
+<h2>Factures</h2>
 <ul>
     {% for x in invoices %}
     <li><a target='img' href='/invoices/{{x.no}}-{{x.chk}}'>{{x.no}}</a> {{x.dt}}{% if x.votesUP != 0 %} {{x.votesUP}} 👍🏻{%endif%}{% if x.votesDOWN != 0 %} {{x.votesDOWN}} 👎🏻{%endif%}</li>

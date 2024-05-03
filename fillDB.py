@@ -68,7 +68,7 @@ CREATE TABLE orders(
 
 N=20 # 10000/365 = 28
 
-random.seed(42)
+#random.seed(42)
 
 for year in range(2019, 2025):
     no=1
